@@ -1,7 +1,7 @@
 {
   "name": "typescript---api",
   "version": "1.0.0",
-  "description": "",
+  "description": "CRUD utilizando Typescript com Nodel.js",
   "main": "index.js",
   "scripts": {
     "start": "nodemon src/index.ts"
