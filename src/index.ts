@@ -1,13 +1,28 @@
 import express from "express";
 import { config } from "dotenv";
-config();
+import routes from "./routes/routes";
+import { MongoClient } from "./database/mongo";
 
-const app = express();
+const main = async () => {
+  config();
 
-const port = process.env.PORT || 8089;
+  const app = express();
 
-app.listen(port, () => console.log(`listening on port ${port}!`));
+  await MongoClient.connect();
 
-app.get("/api/v1", (req, res) => {
-  res.send("hello world!");
-});
+  app.get("/api/v1", (req, res) => {
+    res.status(200).send({
+      success: true,
+      message: "Seja bem vindo (a) a API!",
+      version: "1.0.0",
+    });
+  });
+
+  app.use("/api/v1", routes);
+
+  const port = process.env.PORT || 8089;
+
+  app.listen(port, () => console.log(`==> Listening on port ${port}!`));
+};
+
+main();
