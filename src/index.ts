@@ -8,6 +8,10 @@ const main = async () => {
 
   const app = express();
 
+  app.use(express.urlencoded({ extended: true }));
+  app.use(express.json());
+  app.use(express.json({ type: "application/vnd.api+json" }));
+
   await MongoClient.connect();
 
   app.get("/api/v1", (req, res) => {
