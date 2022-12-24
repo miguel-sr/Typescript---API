@@ -9,3 +9,7 @@ export interface IHttpRequest<B> {
   headers?: any;
   body?: B;
 }
+
+export interface IController {
+  handle(httpRequest: IHttpRequest<unknown>): Promise<IHttpResponse<unknown>>;
+}
