@@ -16,7 +16,7 @@ export class MongoCreateUserRepository implements ICreateUserRepository {
       .findOne({ _id: insertedId });
 
     if (!user) {
-      throw new Error("User not createrd");
+      throw new Error("User not created");
     }
 
     const { _id, ...rest } = user;
