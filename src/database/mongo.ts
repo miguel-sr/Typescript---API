@@ -1,4 +1,5 @@
 import { MongoClient as Mongo, Db } from "mongodb";
+import { MongoUser } from "../repositories/mongo-protocols";
 
 export const MongoClient = {
   client: undefined as unknown as Mongo,
@@ -17,4 +18,8 @@ export const MongoClient = {
 
     console.log("==> Connected to mongodb!");
   },
+  map(user: any) {
+    const { _id, ...rest } = user;
+    return { id: _id.toHexString(), ...rest };
+  }
 };
