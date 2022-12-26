@@ -20,5 +20,5 @@ export const MongoClient = {
   map(user: any) {
     const { _id, ...rest } = user;
     return { id: _id.toHexString(), ...rest };
-  }
+  },
 };
