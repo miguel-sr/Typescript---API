@@ -1,5 +1,4 @@
 import { MongoClient as Mongo, Db } from "mongodb";
-import { MongoUser } from "../repositories/mongo-protocols";
 
 export const MongoClient = {
   client: undefined as unknown as Mongo,
