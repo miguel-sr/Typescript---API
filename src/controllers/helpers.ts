@@ -1,30 +1,29 @@
-import { IHttpResponse } from "./protocols";
+import { HttpStatusCode, IHttpResponse } from "./protocols";
 
 export const ok = <T>(body: any): IHttpResponse<T> => {
   return {
-    statusCode: 200,
+    statusCode: HttpStatusCode.OK,
     body,
   };
 };
 
 export const created = <T>(body: any): IHttpResponse<T> => {
   return {
-    statusCode: 201,
+    statusCode: HttpStatusCode.CREATED,
     body,
   };
 };
 
 export const badRequest = (message: string): IHttpResponse<string> => {
   return {
-    statusCode: 400,
+    statusCode: HttpStatusCode.BAD_REQUEST,
     body: message,
   };
 };
 
 export const serverError = (): IHttpResponse<string> => {
   return {
-    statusCode: 500,
+    statusCode: HttpStatusCode.SERVER_ERROR,
     body: "Something went wrong.",
   };
 };
-
