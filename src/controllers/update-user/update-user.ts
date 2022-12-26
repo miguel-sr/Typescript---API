@@ -1,4 +1,5 @@
 import { User } from "../../models/user";
+import { badRequest, ok, serverError } from "../helpers";
 import { IController, IHttpRequest, IHttpResponse } from "../protocols";
 import { IUpdateUserParams, IUpdateUserRepository } from "./protocols";
 
@@ -6,23 +7,17 @@ export class UpdateUserController implements IController {
   constructor(private readonly updateUserRepository: IUpdateUserRepository) {}
   async handle(
     httpRequest: IHttpRequest<IUpdateUserParams>
-  ): Promise<IHttpResponse<User>> {
+  ): Promise<IHttpResponse<User | string>> {
     try {
       const id = httpRequest?.params?.id;
       const body = httpRequest?.body;
 
       if (!id) {
-        return {
-          statusCode: 400,
-          body: "Missing user id.",
-        };
+        return badRequest("Missing user id.");
       }
 
       if (!body) {
-        return {
-          statusCode: 400,
-          body: "Body missing filds.",
-        };
+        return badRequest("Body missing filds.");
       }
 
       const allowedFieldsToUpdate: (keyof IUpdateUserParams)[] = [
@@ -35,22 +30,13 @@ export class UpdateUserController implements IController {
       );
 
       if (someFieldIsNotAllowedToUpdate) {
-        return {
-          statusCode: 400,
-          body: "Some received field is not allowed.",
-        };
+        return badRequest("Some received field is not allowed.");
       }
 
       const user = await this.updateUserRepository.updateUser(id, body);
-      return {
-        statusCode: 200,
-        body: user,
-      };
+      return ok<User>(user);
     } catch (error) {
-      return {
-        statusCode: 500,
-        body: "Something went wrong.",
-      };
+      return serverError();
     }
   }
 }
